@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-form'; // Wait, I installed react-hook-form
-import { useForm as useHookForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useHookForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
