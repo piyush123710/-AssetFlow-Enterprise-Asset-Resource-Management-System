@@ -83,6 +83,7 @@ const Dashboard = () => {
               <Link to="/maintenance/queue" className="text-blue-400 hover:text-blue-300">Maintenance</Link>
               <Link to="/audits" className="text-blue-400 hover:text-blue-300">Audits</Link>
               <Link to="/reports" className="text-blue-400 hover:text-blue-300">Reports</Link>
+              <Link to="/activity" className="text-blue-400 hover:text-blue-300">Activity</Link>
               <Link to="/bookings/approvals" className="text-blue-400 hover:text-blue-300">Approvals</Link>
             </div>
           </div>

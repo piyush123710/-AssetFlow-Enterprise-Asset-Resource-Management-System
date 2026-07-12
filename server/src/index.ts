@@ -14,6 +14,7 @@ import maintenanceRoutes from './maintenance/maintenance.routes';
 import auditRoutes from './audits/audits.routes';
 import reportRoutes from './reports/reports.routes';
 import notificationRoutes from './notifications/notifications.routes';
+import activityRoutes from './activity/activity.routes';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/audits', auditRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/activity', activityRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

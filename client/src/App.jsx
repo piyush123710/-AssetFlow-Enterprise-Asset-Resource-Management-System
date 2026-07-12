@@ -21,6 +21,7 @@ import MaintenanceQueue from './maintenance/MaintenanceQueue';
 import AuditCycles from './audits/AuditCycles';
 import AuditExecution from './audits/AuditExecution';
 import ReportsDashboard from './reports/ReportsDashboard';
+import ActivityLogs from './activity/ActivityLogs';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <Route path="/audits" element={<AuditCycles />} />
             <Route path="/audits/:id" element={<AuditExecution />} />
             <Route path="/reports" element={<ReportsDashboard />} />
+            <Route path="/activity" element={<ActivityLogs />} />
           </Route>
         </Routes>
       </Router>
