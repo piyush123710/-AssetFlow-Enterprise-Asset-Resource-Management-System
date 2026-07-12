@@ -9,6 +9,7 @@ import Dashboard from './dashboard/Dashboard';
 import Departments from './organization/Departments';
 import Employees from './organization/Employees';
 import Categories from './organization/Categories';
+import RegisterAsset from './assets/RegisterAsset';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/departments" element={<Departments />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/assets/register" element={<RegisterAsset />} />
           </Route>
         </Routes>
       </Router>

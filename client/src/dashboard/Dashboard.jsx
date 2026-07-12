@@ -78,9 +78,9 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors shadow-lg">
+            <Link to="/assets/register" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               + Register Asset
-            </button>
+            </Link>
             <button className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               Book Resource
             </button>
