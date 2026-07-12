@@ -3,6 +3,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './auth/auth.routes';
 import dashboardRoutes from './dashboard/dashboard.routes';
+import departmentRoutes from './departments/departments.routes';
+import userRoutes from './users/users.routes';
+import categoryRoutes from './categories/categories.routes';
 
 dotenv.config();
 
@@ -18,6 +21,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/departments', departmentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

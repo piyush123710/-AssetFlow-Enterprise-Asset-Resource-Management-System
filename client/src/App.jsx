@@ -6,6 +6,9 @@ import Signup from './auth/Signup';
 import ForgotPassword from './auth/ForgotPassword';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './dashboard/Dashboard';
+import Departments from './organization/Departments';
+import Employees from './organization/Employees';
+import Categories from './organization/Categories';
 
 function App() {
   return (
@@ -19,7 +22,9 @@ function App() {
           
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* Add more protected routes here */}
+            <Route path="/departments" element={<Departments />} />
+            <Route path="/employees" element={<Employees />} />
+            <Route path="/categories" element={<Categories />} />
           </Route>
         </Routes>
       </Router>
