@@ -20,6 +20,7 @@ import MaintenanceRequest from './maintenance/MaintenanceRequest';
 import MaintenanceQueue from './maintenance/MaintenanceQueue';
 import AuditCycles from './audits/AuditCycles';
 import AuditExecution from './audits/AuditExecution';
+import ReportsDashboard from './reports/ReportsDashboard';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/maintenance/queue" element={<MaintenanceQueue />} />
             <Route path="/audits" element={<AuditCycles />} />
             <Route path="/audits/:id" element={<AuditExecution />} />
+            <Route path="/reports" element={<ReportsDashboard />} />
           </Route>
         </Routes>
       </Router>
