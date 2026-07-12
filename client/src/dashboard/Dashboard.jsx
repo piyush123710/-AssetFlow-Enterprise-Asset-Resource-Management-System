@@ -80,6 +80,7 @@ const Dashboard = () => {
               <Link to="/assets/transfers" className="text-blue-400 hover:text-blue-300">Transfers</Link>
               <Link to="/bookings/my" className="text-blue-400 hover:text-blue-300">My Bookings</Link>
               <Link to="/maintenance/queue" className="text-blue-400 hover:text-blue-300">Maintenance</Link>
+              <Link to="/audits" className="text-blue-400 hover:text-blue-300">Audits</Link>
               <Link to="/bookings/approvals" className="text-blue-400 hover:text-blue-300">Approvals</Link>
             </div>
           </div>

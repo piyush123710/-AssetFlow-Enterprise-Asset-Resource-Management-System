@@ -11,6 +11,7 @@ import allocationRoutes from './allocations/allocations.routes';
 import transferRoutes from './transfers/transfers.routes';
 import bookingRoutes from './bookings/bookings.routes';
 import maintenanceRoutes from './maintenance/maintenance.routes';
+import auditRoutes from './audits/audits.routes';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/allocations', allocationRoutes);
 app.use('/api/transfers', transferRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
+app.use('/api/audits', auditRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

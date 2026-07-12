@@ -18,6 +18,8 @@ import MyBookings from './bookings/MyBookings';
 import BookingApprovals from './bookings/BookingApprovals';
 import MaintenanceRequest from './maintenance/MaintenanceRequest';
 import MaintenanceQueue from './maintenance/MaintenanceQueue';
+import AuditCycles from './audits/AuditCycles';
+import AuditExecution from './audits/AuditExecution';
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
             <Route path="/bookings/approvals" element={<BookingApprovals />} />
             <Route path="/maintenance/request" element={<MaintenanceRequest />} />
             <Route path="/maintenance/queue" element={<MaintenanceQueue />} />
+            <Route path="/audits" element={<AuditCycles />} />
+            <Route path="/audits/:id" element={<AuditExecution />} />
           </Route>
         </Routes>
       </Router>
