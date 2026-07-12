@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import Notifications from '../components/Notifications';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
@@ -95,9 +96,12 @@ const Dashboard = () => {
             <Link to="/maintenance/request" className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               Maintenance Req
             </Link>
-            <button onClick={handleLogout} className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg font-medium transition-colors">
-              Logout
-            </button>
+            <div className="border-l border-gray-600 pl-4 flex items-center space-x-4">
+              <Notifications />
+              <button onClick={handleLogout} className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg font-medium transition-colors">
+                Logout
+              </button>
+            </div>
           </div>
         </div>
 
