@@ -15,7 +15,7 @@ export const requestTransfer = async (req: Request, res: Response): Promise<any>
       where: {
         assetId,
         userId: fromUserId,
-        returnDate: null
+        returnedAt: null
       }
     });
 
@@ -28,7 +28,6 @@ export const requestTransfer = async (req: Request, res: Response): Promise<any>
         assetId,
         fromUserId,
         toUserId,
-        reason,
         status: 'PENDING'
       }
     });
@@ -54,10 +53,9 @@ export const getTransfers = async (req: Request, res: Response): Promise<any> =>
       include: {
         asset: { select: { name: true, assetTag: true } },
         fromUser: { select: { name: true, email: true } },
-        toUser: { select: { name: true, email: true } },
-        approvedBy: { select: { name: true } }
+        toUser: { select: { name: true, email: true } }
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { requestedAt: 'desc' }
     });
 
     return res.status(200).json(transfers);
@@ -92,20 +90,20 @@ export const respondToTransfer = async (req: Request, res: Response): Promise<an
         where: { id },
         data: {
           status,
-          approvedById: approverId
+          resolvedAt: new Date()
         }
       });
 
       if (status === 'APPROVED') {
         // End the current allocation for fromUser
         const currentAlloc = await tx.assetAllocation.findFirst({
-          where: { assetId: transfer.assetId, userId: transfer.fromUserId, returnDate: null }
+          where: { assetId: transfer.assetId, userId: transfer.fromUserId, returnedAt: null }
         });
         
         if (currentAlloc) {
           await tx.assetAllocation.update({
             where: { id: currentAlloc.id },
-            data: { returnDate: new Date() }
+            data: { returnedAt: new Date() }
           });
         }
 

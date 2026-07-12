@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+
 
 const Signup = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -32,11 +36,20 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
-      <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden p-8 border border-white/20">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">Create Account</h2>
-          <p className="text-gray-400 mt-2">Join AssetFlow as an Employee</p>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden font-inter">
+      {/* Background Orbs */}
+      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-violet-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-md w-full bg-white/5 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden p-10 border border-white/10 relative z-10 my-8"
+      >
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-tight font-outfit">Create Account</h2>
+          <p className="text-gray-400 mt-3 text-sm font-medium">Join AssetFlow as an Employee</p>
         </div>
         
         {error && (
@@ -46,20 +59,19 @@ const Signup = () => {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
-            <input 
+          <div className="group">
+            <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide group-focus-within:text-indigo-400 transition-colors">Full Name</label>
+            <Input 
               type="text" 
               {...register('name', { required: 'Name is required' })}
-              className="w-full px-4 py-3 bg-black/20 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500"
               placeholder="John Doe"
             />
-            {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
+            {errors.name && <p className="text-red-400 text-xs mt-2">{errors.name.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-            <input 
+          <div className="group">
+            <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide group-focus-within:text-indigo-400 transition-colors">Email Address</label>
+            <Input 
               type="email" 
               {...register('email', { 
                 required: 'Email is required',
@@ -68,43 +80,41 @@ const Signup = () => {
                   message: "Invalid email address"
                 }
               })}
-              className="w-full px-4 py-3 bg-black/20 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500"
               placeholder="you@example.com"
             />
-            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+            {errors.email && <p className="text-red-400 text-xs mt-2">{errors.email.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
-            <input 
+          <div className="group">
+            <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide group-focus-within:text-indigo-400 transition-colors">Password</label>
+            <Input 
               type="password" 
               {...register('password', { 
                 required: 'Password is required',
                 minLength: { value: 6, message: 'Password must be at least 6 characters' }
               })}
-              className="w-full px-4 py-3 bg-black/20 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500"
               placeholder="••••••••"
             />
-            {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>}
+            {errors.password && <p className="text-red-400 text-xs mt-2">{errors.password.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
-            <input 
+          <div className="group">
+            <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide group-focus-within:text-indigo-400 transition-colors">Confirm Password</label>
+            <Input 
               type="password" 
               {...register('confirmPassword', { 
                 validate: value => value === password || 'Passwords do not match'
               })}
-              className="w-full px-4 py-3 bg-black/20 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500"
               placeholder="••••••••"
             />
-            {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && <p className="text-red-400 text-xs mt-2">{errors.confirmPassword.message}</p>}
           </div>
 
-          <button 
+          <Button 
             type="submit" 
             disabled={loading}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all flex justify-center items-center mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full mt-6"
+            size="lg"
           >
             {loading ? (
               <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -112,16 +122,16 @@ const Signup = () => {
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             ) : 'Create Account'}
-          </button>
+          </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-400">
+        <p className="mt-8 text-center text-sm text-gray-400 font-medium">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-bold transition-colors">
             Sign in
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

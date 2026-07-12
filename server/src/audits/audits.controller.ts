@@ -3,29 +3,28 @@ import { prisma } from '../lib/prisma';
 
 export const createAuditCycle = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { name, startDate, endDate, description } = req.body;
-    const createdBy = (req as any).user.userId;
+    const { title, startDate, endDate } = req.body;
+    const auditorId = (req as any).user.userId;
 
-    if (!name || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Name, Start Date, and End Date are required' });
+    if (!title || !startDate || !endDate) {
+      return res.status(400).json({ message: 'Title, Start Date, and End Date are required' });
     }
 
     const auditCycle = await prisma.auditCycle.create({
       data: {
-        name,
+        title,
         startDate: new Date(startDate),
         endDate: new Date(endDate),
-        description,
-        status: 'IN_PROGRESS',
-        createdBy
+        status: 'ONGOING',
+        auditorId
       }
     });
 
     await prisma.activityLog.create({
       data: {
-        userId: createdBy,
+        userId: auditorId,
         action: 'CREATED_AUDIT_CYCLE',
-        details: JSON.stringify({ auditId: auditCycle.id, name })
+        details: JSON.stringify({ auditId: auditCycle.id, title })
       }
     });
 
@@ -40,8 +39,7 @@ export const getAuditCycles = async (req: Request, res: Response): Promise<any> 
   try {
     const audits = await prisma.auditCycle.findMany({
       include: {
-        creator: { select: { name: true } },
-        _count: { select: { items: true } }
+        _count: { select: { auditItems: true } }
       },
       orderBy: { createdAt: 'desc' }
     });
@@ -60,8 +58,7 @@ export const getAuditCycleById = async (req: Request, res: Response): Promise<an
     const audit = await prisma.auditCycle.findUnique({
       where: { id },
       include: {
-        creator: { select: { name: true } },
-        items: {
+        auditItems: {
           include: {
             asset: { select: { id: true, name: true, assetTag: true, status: true, location: true } }
           }
@@ -90,7 +87,7 @@ export const addAssetToAudit = async (req: Request, res: Response): Promise<any>
     }
 
     const audit = await prisma.auditCycle.findUnique({ where: { id } });
-    if (!audit || audit.status !== 'IN_PROGRESS') {
+    if (!audit || audit.status !== 'ONGOING') {
       return res.status(400).json({ message: 'Audit cycle is not active' });
     }
 
@@ -105,9 +102,8 @@ export const addAssetToAudit = async (req: Request, res: Response): Promise<any>
 
     const item = await prisma.auditItem.create({
       data: {
-        auditId: id,
-        assetId,
-        status: 'PENDING'
+        auditCycleId: id,
+        assetId
       },
       include: {
         asset: { select: { name: true, assetTag: true, status: true, location: true } }
@@ -134,9 +130,11 @@ export const updateAuditItem = async (req: Request, res: Response): Promise<any>
     const updated = await prisma.auditItem.update({
       where: { id: itemId },
       data: {
-        status,
+        verified: status === 'FOUND',
+        isMissing: status === 'MISSING',
+        isDamaged: status === 'DAMAGED',
         notes,
-        auditedAt: new Date()
+        verifiedAt: new Date()
       }
     });
 

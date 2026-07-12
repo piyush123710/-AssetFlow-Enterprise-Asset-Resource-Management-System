@@ -22,13 +22,14 @@ import AuditCycles from './audits/AuditCycles';
 import AuditExecution from './audits/AuditExecution';
 import ReportsDashboard from './reports/ReportsDashboard';
 import ActivityLogs from './activity/ActivityLogs';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -3,39 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum Role {
-  ADMIN
-  ASSET_MANAGER
-  DEPARTMENT_HEAD
-  EMPLOYEE
-}
-
-enum AssetStatus {
-  AVAILABLE
-  ALLOCATED
-  RESERVED
-  UNDER_MAINTENANCE
-  LOST
-  RETIRED
-  DISPOSED
-}
-
-enum RequestStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
-enum MaintenanceStatus {
-  PENDING
-  APPROVED
-  TECHNICIAN_ASSIGNED
-  IN_PROGRESS
-  RESOLVED
 }
 
 model User {
@@ -43,7 +12,7 @@ model User {
   name             String
   email            String            @unique
   password         String
-  role             Role              @default(EMPLOYEE)
+  role             String            @default("EMPLOYEE")
   departmentId     String?
   department       Department?       @relation("UserDepartment", fields: [departmentId], references: [id])
   managedDept      Department?       @relation("DepartmentHead")
@@ -91,7 +60,7 @@ model Asset {
   photoUrl         String?
   qrCodeUrl        String?
   isShared         Boolean           @default(false)
-  status           AssetStatus       @default(AVAILABLE)
+  status           String            @default("AVAILABLE")
   allocations      AssetAllocation[]
   transferRequests TransferRequest[]
   bookings         Booking[]
@@ -120,7 +89,7 @@ model TransferRequest {
   fromUser     User          @relation("TransferSent", fields: [fromUserId], references: [id])
   toUserId     String
   toUser       User          @relation("TransferReceived", fields: [toUserId], references: [id])
-  status       RequestStatus @default(PENDING)
+  status       String        @default("PENDING")
   requestedAt  DateTime      @default(now())
   resolvedAt   DateTime?
 }
@@ -133,7 +102,7 @@ model Booking {
   user         User          @relation(fields: [userId], references: [id])
   startTime    DateTime
   endTime      DateTime
-  status       RequestStatus @default(PENDING)
+  status       String        @default("PENDING")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
@@ -147,7 +116,7 @@ model MaintenanceRequest {
   issueDetails String
   photoUrl     String?
   priority     String            @default("MEDIUM") // LOW, MEDIUM, HIGH
-  status       MaintenanceStatus @default(PENDING)
+  status       String            @default("PENDING")
   technicianId String?
   history      String?           // Can store stringified JSON or text
   createdAt    DateTime          @default(now())

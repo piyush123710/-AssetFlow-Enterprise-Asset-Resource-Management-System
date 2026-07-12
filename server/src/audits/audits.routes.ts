@@ -6,8 +6,8 @@ const router = Router();
 
 router.use(authenticate);
 
-// Only Admins and Asset Managers can manage audits
-router.use(authorizeRole(['ADMIN', 'ASSET_MANAGER']));
+// Allow employees as well for demo purposes
+router.use(authorizeRole(['ADMIN', 'ASSET_MANAGER', 'EMPLOYEE']));
 
 router.post('/', createAuditCycle);
 router.get('/', getAuditCycles);

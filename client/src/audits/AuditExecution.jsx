@@ -72,7 +72,7 @@ const AuditExecution = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 space-y-6">
         
         {/* Header */}
         <div className="flex justify-between items-center bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-xl">

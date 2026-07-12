@@ -9,7 +9,7 @@ const AuditCycles = () => {
   // Modal State
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    title: '',
     startDate: '',
     endDate: '',
     description: ''
@@ -43,7 +43,7 @@ const AuditCycles = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 space-y-6">
         
         <div className="flex justify-between items-center bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-xl">
           <div>
@@ -84,13 +84,13 @@ const AuditCycles = () => {
                 ) : (
                   audits.map(audit => (
                     <tr key={audit.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4 font-medium text-white">{audit.name}</td>
+                      <td className="px-6 py-4 font-medium text-white">{audit.title}</td>
                       <td className="px-6 py-4 italic text-gray-400 truncate max-w-xs">{audit.description || '-'}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-gray-300">{new Date(audit.startDate).toLocaleDateString()}</div>
                         <div className="text-gray-500">to {new Date(audit.endDate).toLocaleDateString()}</div>
                       </td>
-                      <td className="px-6 py-4">{audit._count.items} Assets</td>
+                      <td className="px-6 py-4">{audit._count.auditItems} Assets</td>
                       <td className="px-6 py-4">
                         <span className={`px-2 py-1 rounded-md text-xs font-semibold ${
                           audit.status === 'IN_PROGRESS' ? 'bg-blue-500/20 text-blue-400' :
@@ -129,8 +129,8 @@ const AuditCycles = () => {
                   <input 
                     type="text"
                     required
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
                     className="w-full px-4 py-3 bg-black/20 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500"
                     placeholder="e.g. Q3 2024 IT Inventory"
                   />

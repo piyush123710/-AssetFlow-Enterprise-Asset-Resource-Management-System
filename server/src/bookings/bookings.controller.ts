@@ -47,7 +47,6 @@ export const createBooking = async (req: Request, res: Response): Promise<any> =
         userId,
         startTime: start,
         endTime: end,
-        purpose,
         status: 'PENDING'
       }
     });
@@ -87,8 +86,7 @@ export const getAllBookings = async (req: Request, res: Response): Promise<any> 
     const bookings = await prisma.booking.findMany({
       include: {
         asset: { select: { name: true, assetTag: true } },
-        user: { select: { name: true, email: true } },
-        approvedBy: { select: { name: true } }
+        user: { select: { name: true, email: true } }
       },
       orderBy: { createdAt: 'desc' }
     });
@@ -121,8 +119,7 @@ export const respondToBooking = async (req: Request, res: Response): Promise<any
     const updated = await prisma.booking.update({
       where: { id },
       data: {
-        status,
-        approvedById: approverId
+        status
       }
     });
 

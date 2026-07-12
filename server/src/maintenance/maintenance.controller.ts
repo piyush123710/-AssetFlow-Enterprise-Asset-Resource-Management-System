@@ -22,9 +22,8 @@ export const reportIssue = async (req: Request, res: Response): Promise<any> => 
       const req = await tx.maintenanceRequest.create({
         data: {
           assetId,
-          reportedBy,
-          issueDescription,
-          estimatedCost: estimatedCost ? parseFloat(estimatedCost) : null,
+          userId: reportedBy,
+          issueDetails: issueDescription,
           status: 'PENDING'
         }
       });
@@ -59,8 +58,7 @@ export const getMaintenanceQueue = async (req: Request, res: Response): Promise<
     const queue = await prisma.maintenanceRequest.findMany({
       include: {
         asset: { select: { name: true, assetTag: true, status: true } },
-        reporter: { select: { name: true, email: true } },
-        resolver: { select: { name: true } }
+        user: { select: { name: true, email: true } }
       },
       orderBy: { createdAt: 'desc' }
     });
@@ -93,10 +91,8 @@ export const resolveIssue = async (req: Request, res: Response): Promise<any> =>
         where: { id },
         data: {
           status: 'COMPLETED',
-          resolutionNotes,
-          actualCost: actualCost ? parseFloat(actualCost) : null,
-          resolvedBy: resolverId,
-          resolvedAt: new Date()
+          history: resolutionNotes,
+          technicianId: resolverId
         }
       });
 
@@ -104,8 +100,7 @@ export const resolveIssue = async (req: Request, res: Response): Promise<any> =>
       await tx.asset.update({
         where: { id: maintenance.assetId },
         data: { 
-          status: 'AVAILABLE',
-          lastMaintenanceDate: new Date()
+          status: 'AVAILABLE'
         }
       });
 

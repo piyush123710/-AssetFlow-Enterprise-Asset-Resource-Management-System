@@ -59,14 +59,14 @@ export const getMyAssets = async (req: Request, res: Response): Promise<any> => 
     const allocations = await prisma.assetAllocation.findMany({
       where: { 
         userId, 
-        returnDate: null // Only get currently allocated assets
+        returnedAt: null // Only get currently allocated assets
       },
       include: {
         asset: {
           include: { category: true }
         }
       },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { allocatedAt: 'desc' }
     });
 
     return res.status(200).json(allocations);
@@ -88,7 +88,7 @@ export const returnAsset = async (req: Request, res: Response): Promise<any> => 
       return res.status(404).json({ message: 'Allocation not found' });
     }
 
-    if (allocation.returnDate) {
+    if (allocation.returnedAt) {
       return res.status(400).json({ message: 'Asset already returned' });
     }
 
@@ -100,7 +100,7 @@ export const returnAsset = async (req: Request, res: Response): Promise<any> => 
     await prisma.$transaction(async (tx) => {
       await tx.assetAllocation.update({
         where: { id },
-        data: { returnDate: new Date() }
+        data: { returnedAt: new Date() }
       });
 
       await tx.asset.update({

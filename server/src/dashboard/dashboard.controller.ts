@@ -24,9 +24,15 @@ export const getStats = async (req: Request, res: Response): Promise<any> => {
     const pendingBookings = await prisma.booking.count({ where: { status: 'PENDING' } });
     const pendingTransfers = await prisma.transferRequest.count({ where: { status: 'PENDING' } });
 
-    // Upcoming returns (e.g. allocated assets that have a return date set, assuming we track expected return)
-    // For now, mock this as 0 since expectedReturnDate is not in schema explicitly for allocations
-    const upcomingReturns = 0;
+    // Upcoming returns based on Bookings that end in the future
+    const upcomingReturns = await prisma.booking.count({
+      where: {
+        status: 'APPROVED',
+        endTime: {
+          gt: new Date()
+        }
+      }
+    });
 
     return res.status(200).json({
       totalAssets,
