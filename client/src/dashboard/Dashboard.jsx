@@ -78,15 +78,17 @@ const Dashboard = () => {
               <Link to="/assets" className="text-blue-400 hover:text-blue-300">All Assets</Link>
               <Link to="/assets/my-assets" className="text-blue-400 hover:text-blue-300">My Assets</Link>
               <Link to="/assets/transfers" className="text-blue-400 hover:text-blue-300">Transfers</Link>
+              <Link to="/bookings/my" className="text-blue-400 hover:text-blue-300">My Bookings</Link>
+              <Link to="/bookings/approvals" className="text-blue-400 hover:text-blue-300">Approvals</Link>
             </div>
           </div>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link to="/assets/register" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               + Register Asset
             </Link>
-            <button className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-medium transition-colors shadow-lg">
+            <Link to="/bookings/book" className="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               Book Resource
-            </button>
+            </Link>
             <button className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg font-medium transition-colors shadow-lg">
               Maintenance Req
             </button>

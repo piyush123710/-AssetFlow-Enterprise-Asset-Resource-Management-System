@@ -13,6 +13,9 @@ import RegisterAsset from './assets/RegisterAsset';
 import AssetDirectory from './assets/AssetDirectory';
 import MyAssets from './assets/MyAssets';
 import TransferRequests from './assets/TransferRequests';
+import BookResource from './bookings/BookResource';
+import MyBookings from './bookings/MyBookings';
+import BookingApprovals from './bookings/BookingApprovals';
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
             <Route path="/assets/register" element={<RegisterAsset />} />
             <Route path="/assets/my-assets" element={<MyAssets />} />
             <Route path="/assets/transfers" element={<TransferRequests />} />
+            <Route path="/bookings/book" element={<BookResource />} />
+            <Route path="/bookings/my" element={<MyBookings />} />
+            <Route path="/bookings/approvals" element={<BookingApprovals />} />
           </Route>
         </Routes>
       </Router>
