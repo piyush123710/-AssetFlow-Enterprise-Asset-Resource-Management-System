@@ -16,6 +16,8 @@ import TransferRequests from './assets/TransferRequests';
 import BookResource from './bookings/BookResource';
 import MyBookings from './bookings/MyBookings';
 import BookingApprovals from './bookings/BookingApprovals';
+import MaintenanceRequest from './maintenance/MaintenanceRequest';
+import MaintenanceQueue from './maintenance/MaintenanceQueue';
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
             <Route path="/bookings/book" element={<BookResource />} />
             <Route path="/bookings/my" element={<MyBookings />} />
             <Route path="/bookings/approvals" element={<BookingApprovals />} />
+            <Route path="/maintenance/request" element={<MaintenanceRequest />} />
+            <Route path="/maintenance/queue" element={<MaintenanceQueue />} />
           </Route>
         </Routes>
       </Router>
