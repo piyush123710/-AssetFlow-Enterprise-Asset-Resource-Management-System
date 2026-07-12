@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import AllocateModal from './AllocateModal';
 
 const AssetDirectory = () => {
   const [assets, setAssets] = useState([]);
@@ -14,6 +15,7 @@ const AssetDirectory = () => {
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
+  const [allocatingAsset, setAllocatingAsset] = useState(null);
 
   const { user } = useAuth();
   const canManage = user?.role === 'ADMIN' || user?.role === 'ASSET_MANAGER';
@@ -155,6 +157,14 @@ const AssetDirectory = () => {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <button className="text-blue-400 hover:text-blue-300 transition-colors mr-3">View</button>
+                        {canManage && asset.status === 'AVAILABLE' && (
+                          <button 
+                            onClick={() => setAllocatingAsset(asset)}
+                            className="text-green-400 hover:text-green-300 transition-colors mr-3"
+                          >
+                            Allocate
+                          </button>
+                        )}
                         {canManage && <button className="text-gray-400 hover:text-white transition-colors">Edit</button>}
                       </td>
                     </tr>
@@ -191,6 +201,17 @@ const AssetDirectory = () => {
         </div>
 
       </div>
+
+      {allocatingAsset && (
+        <AllocateModal 
+          asset={allocatingAsset} 
+          onClose={() => setAllocatingAsset(null)}
+          onAllocated={() => {
+            setAllocatingAsset(null);
+            fetchAssets();
+          }}
+        />
+      )}
     </div>
   );
 };

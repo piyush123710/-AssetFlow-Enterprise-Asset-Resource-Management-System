@@ -7,6 +7,8 @@ import departmentRoutes from './departments/departments.routes';
 import userRoutes from './users/users.routes';
 import categoryRoutes from './categories/categories.routes';
 import assetRoutes from './assets/assets.routes';
+import allocationRoutes from './allocations/allocations.routes';
+import transferRoutes from './transfers/transfers.routes';
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.use('/api/departments', departmentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/assets', assetRoutes);
+app.use('/api/allocations', allocationRoutes);
+app.use('/api/transfers', transferRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

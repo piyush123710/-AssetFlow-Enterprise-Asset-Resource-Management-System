@@ -11,6 +11,8 @@ import Employees from './organization/Employees';
 import Categories from './organization/Categories';
 import RegisterAsset from './assets/RegisterAsset';
 import AssetDirectory from './assets/AssetDirectory';
+import MyAssets from './assets/MyAssets';
+import TransferRequests from './assets/TransferRequests';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/assets" element={<AssetDirectory />} />
             <Route path="/assets/register" element={<RegisterAsset />} />
+            <Route path="/assets/my-assets" element={<MyAssets />} />
+            <Route path="/assets/transfers" element={<TransferRequests />} />
           </Route>
         </Routes>
       </Router>
