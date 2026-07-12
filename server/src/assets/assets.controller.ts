@@ -68,3 +68,82 @@ export const registerAsset = async (req: Request, res: Response): Promise<any> =
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getAssets = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { page = 1, limit = 10, search, categoryId, status } = req.query;
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const where: any = {};
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search as string, mode: 'insensitive' } },
+        { assetTag: { contains: search as string, mode: 'insensitive' } },
+        { serialNumber: { contains: search as string, mode: 'insensitive' } }
+      ];
+    }
+
+    if (categoryId) {
+      where.categoryId = categoryId as string;
+    }
+
+    if (status) {
+      where.status = status;
+    }
+
+    const [assets, totalItems] = await Promise.all([
+      prisma.asset.findMany({
+        where,
+        skip,
+        take: limitNumber,
+        include: { category: { select: { name: true } } },
+        orderBy: { createdAt: 'desc' }
+      }),
+      prisma.asset.count({ where })
+    ]);
+
+    return res.status(200).json({
+      data: assets,
+      meta: {
+        totalItems,
+        currentPage: pageNumber,
+        totalPages: Math.ceil(totalItems / limitNumber),
+        itemsPerPage: limitNumber
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching assets:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getAssetById = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { id } = req.params;
+    const asset = await prisma.asset.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        allocations: {
+          include: { user: { select: { name: true, email: true } } },
+          orderBy: { createdAt: 'desc' }
+        },
+        maintenanceHist: {
+          orderBy: { createdAt: 'desc' }
+        }
+      }
+    });
+
+    if (!asset) {
+      return res.status(404).json({ message: 'Asset not found' });
+    }
+
+    return res.status(200).json(asset);
+  } catch (error) {
+    console.error('Error fetching asset details:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};

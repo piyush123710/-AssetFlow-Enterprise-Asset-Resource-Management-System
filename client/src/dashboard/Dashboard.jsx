@@ -75,6 +75,7 @@ const Dashboard = () => {
               <Link to="/departments" className="text-blue-400 hover:text-blue-300">Departments</Link>
               <Link to="/employees" className="text-blue-400 hover:text-blue-300">Directory</Link>
               <Link to="/categories" className="text-blue-400 hover:text-blue-300">Asset Categories</Link>
+              <Link to="/assets" className="text-blue-400 hover:text-blue-300">All Assets</Link>
             </div>
           </div>
           <div className="flex space-x-4 mt-4 md:mt-0">
